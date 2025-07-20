@@ -9,6 +9,23 @@
     - [Schools of Thought](#schools-of-thought)
     - [We Are Authors](#we-are-authors)
     - [The Boy Scout Rule](#the-boy-scout-rule)
+  - [Chapter 2: Meaningful Names](#chapter-2-meaningful-names)
+    - [Use Intention-Revealing Names](#use-intention-revealing-names)
+    - [Avoid Disinformation](#avoid-disinformation)
+    - [Make Meaningful Distinctions](#make-meaningful-distinctions)
+    - [Use Pronounceable Names](#use-pronounceable-names)
+    - [Use Searchable Names](#use-searchable-names)
+    - [Avoid Encodings](#avoid-encodings)
+    - [Avoid Mental Mapping](#avoid-mental-mapping)
+    - [Class Names](#class-names)
+    - [Method Names](#method-names)
+    - [Don't Be Cute](#dont-be-cute)
+    - [Pick One Word per Concept](#pick-one-word-per-concept)
+    - [Don't Pun](#dont-pun)
+    - [Use Solution Domain Names](#use-solution-domain-names)
+    - [Use Problem Domain Names](#use-problem-domain-names)
+    - [Add Meaningful Context](#add-meaningful-context)
+    - [Don't Add Gratuitous Context](#dont-add-gratuitous-context)
 
 ---
 
@@ -89,5 +106,121 @@
 - The Boy Scouts of America have a simple rule: *Leave the campground cleaner than you found it.*
 - Small, consistent improvements prevent code rot. Making code better with every change reflects
   true professionalism and ensures continuous progress.
+
+---
+
+## Chapter 2: Meaningful Names
+
+- Names are everywhere in software. We name our variables, our functions, our arguments, classes,
+  packages, source files and directories. We name everything, so we should do it well and with care.
+
+### Use Intention-Revealing Names
+
+- Good names reveal intent and save time. They should explain what something is, does, and how it's
+  used. If a comment is needed, the name isn't clear enough.
+
+### Avoid Disinformation
+
+- Avoid misleading names that confuse or contradict known meanings. Choose names that clearly
+  reflect what the code represents or does.
+- Avoid names that differ only slightly, as they cause confusion. Use similar names only when they
+  represent closely related concepts.
+- Avoid using lower-case L or uppercase O as variable names since they look like 1 and 0. Clear
+  naming prevents confusion and avoids relying on fonts or extra instructions.
+
+### Make Meaningful Distinctions
+
+- Don't alter names just to satisfy the compiler. If names must differ, they should reflect
+  meaningful differences, not arbitrary changes or errors.
+- Avoid number-series names like a1, a2 as they lack meaning and give no insight into the author's
+  intent.
+- Avoid noise words like *Info*, *Data*, or *Object* in names, as they add no real meaning. Use
+  naming that clearly distinguishes purpose without redundancy.
+
+### Use Pronounceable Names
+
+- Use pronounceable names, so code can be easily discussed. Clear naming supports communication,
+  which is vital in collaborative programming.
+- If you can't pronounce it, you can't discuss it without sounding like an idiot.
+  
+### Use Searchable Names
+
+- Single-letter names and numeric constants have a particular problem in that they are not easy to
+  locate across a body of text.
+- Use meaningful, searchable names instead of raw values or short names to avoid confusion and make
+  code easier to find, read, and maintain.
+- Use single-letter names only as local variables in short methods. Wider-scope variables need
+  longer, search-friendly names to ensure clarity and maintainability.
+
+### Avoid Encodings
+
+- Avoid encoding type or scope in names. It adds needless complexity, is hard to read, and creates
+  extra work for new developers.
+- Old languages forced encoded names (like Hungarian notation) due to limits and weak typing. Modern
+  languages support clear, type-safe code, making such encodings unnecessary today.
+- Prefixes like **m_** for member variables are no longer needed. Modern tools and clean, small code
+  make such markers unnecessary and eventually just visual clutter.
+- Avoid prefixing interfaces with letters like **I**. Name interfaces clearly and, if needed, encode
+  only the implementation to reduce distraction and reveal intent.
+
+### Avoid Mental Mapping
+
+- Avoid vague names that force readers to mentally map them to real concepts. Use clear, meaningful
+  terms from the problem or solution domain.
+- Professional programmers prioritize clarity, writing code that others can easily understand and
+  maintain.
+
+### Class Names
+
+- Class and object names should be nouns or noun phrases, not verbs, like *Customer* or *Account*.
+  Avoid vague terms like *Manager*, *Processor*, *Data* or *Info* in the name for clarity.
+
+### Method Names
+
+- Methods should have verbs or verb phrase names like *PostPayment*, *DeletePage* or *Save*.
+  Accessors, mutators, and predicates may use *Get*, *Set*, and *Is* as prefix for clarity.
+
+### Don't Be Cute
+
+- Avoid clever or joke-based names. Choose clear, descriptive names that all readers can understand,
+  regardless of humor or cultural context.
+- Say what you mean. Mean what you say.
+
+### Pick One Word per Concept
+
+- Use consistent terms for the same concept to avoid confusion and save time. Mixing synonyms like
+  *fetch*, *retrieve*, and *get* can make code harder to understand and maintain.
+- Function names must be clear and consistent, since modern tools often show little context. Good
+  method names help you choose the right one quickly without extra digging.
+- A consistent lexicon is a great boon to the programmers who must use your code.
+
+### Don't Pun
+
+- Do not use the same word for different meanings. Reusing terms for separate ideas causes
+  confusion. One word per concept keeps naming clear and consistent.
+- Avoid reusing names like *add* with different meanings. Use precise names to prevent confusion and
+  make code easier to read and understand.
+
+### Use Solution Domain Names
+
+- Use technical terms and computer science concepts in code, as programmers understand them better
+  than vague domain terms. Familiar names aid faster comprehension.
+
+### Use Problem Domain Names
+
+- When no technical term fits, use problem domain names. Match naming to context, using domain terms
+  for domain logic and technical terms for technical logic.
+
+### Add Meaningful Context
+
+- Most names need context for clarity. Use well-named classes or functions to provide it, and only
+  use prefixes when absolutely necessary. For instance, variables named *firstName*, *lastName*,
+  *city*, *state*, etc. could be grouped into a class to represent a concept like an *Address*.
+
+### Don't Add Gratuitous Context
+
+- Avoid prefixing class names with the application name. It clutters code, hinders autocomplete, and
+  makes reuse harder with long, redundant names.
+- Prefer short, clear names with just enough context.
 
 ---
