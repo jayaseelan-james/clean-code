@@ -26,6 +26,19 @@
     - [Use Problem Domain Names](#use-problem-domain-names)
     - [Add Meaningful Context](#add-meaningful-context)
     - [Don't Add Gratuitous Context](#dont-add-gratuitous-context)
+  - [Chapter 3: Functions](#chapter-3-functions)
+    - [Small!](#small)
+    - [Do One Thing](#do-one-thing)
+    - [One Level of Abstraction per Function](#one-level-of-abstraction-per-function)
+    - [Switch Statements](#switch-statements)
+    - [Use Descriptive Names](#use-descriptive-names)
+    - [Function Arguments](#function-arguments)
+    - [Have No Side Effects](#have-no-side-effects)
+    - [Command Query Separation](#command-query-separation)
+    - [Prefer Exceptions to Returning Error Codes](#prefer-exceptions-to-returning-error-codes)
+    - [Don't Repeat Yourself](#dont-repeat-yourself)
+    - [Structured Programming](#structured-programming)
+    - [How Do You Write Functions Like This?](#how-do-you-write-functions-like-this)
 
 ---
 
@@ -222,5 +235,136 @@
 - Avoid prefixing class names with the application name. It clutters code, hinders autocomplete, and
   makes reuse harder with long, redundant names.
 - Prefer short, clear names with just enough context.
+
+---
+
+## Chapter 3: Functions
+
+### Small!
+
+- The first rule of functions is that they should be small. The second rule of functions is that
+  they should be smaller than that.
+- In the past, functions were limited to a screen-full, but even today, they should rarely exceed 20
+  lines despite larger modern displays.
+- Control blocks should be one line, ideally a function call, keeping functions small, readable, and
+  shallow in nesting for clarity and documentation.
+
+### Do One Thing
+
+- Functions should do one thing. They should do it well. They should do it only.
+- The idea that functions should do one thing is hard to apply, as it's unclear whether a function
+  like *RenderPageWithSetupsAndTeardowns* is doing one task or several at different abstraction
+  levels.
+- A function does one thing if its steps are just one level below its name; mixing abstraction
+  levels means it's doing more than one thing.
+- If you can extract a function with a meaningful name that's not just a restatement of the code,
+  the original function is doing more than one thing.
+
+### One Level of Abstraction per Function
+
+- To ensure a function does one thing, all statements should be at the same abstraction level;
+  mixing levels causes confusion and invites clutter over time.
+- Reading Code from Top to Bottom: The Stepdown Rule
+  - Code should read like a top-down narrative, with each function followed by others at the next
+    abstraction level. This is called the Stepdown Rule.
+  - Though hard to master, keeping functions at a single abstraction level is vital to keeping them
+    short and focused on doing one thing.
+
+### Switch Statements
+
+- Switch statements are hard to keep small or focused, so they should be isolated in low-level
+  classes and replaced with polymorphism when possible.
+
+``` csharp Payroll.cs
+public Money CalculatePay(Employee e)
+{
+    return e.Type switch
+    {
+        EmployeeType.Commissioned => CalculateCommissionedPay(e),
+        EmployeeType.Hourly => CalculateHourlyPay(e),
+        EmployeeType.Salaried => CalculateSalariedPay(e),
+        _ => throw new InvalidEmployeeTypeException(e.Type)
+    };
+}
+```
+
+- This function is large, violates Single Responsibility Principle (SRP) and Open Closed Principle
+  (OCP), grows with new types, and sets a pattern for many similar functions to repeat the same
+  flawed structure.
+- Use a hidden switch in an abstract factory to create polymorphic *Employee* objects, allowing
+  functions like *CalculatePay* to dispatch via inheritance, not conditionals.
+
+### Use Descriptive Names
+
+- Good names are key to clean code. Small, focused functions make naming easier. Long, clear names
+  are better than short ones or comments, so use readable, descriptive names.
+- Take time to try different names using IDEs. Descriptive, consistent names improve clarity, guide
+  design, and often lead to better code structure.
+
+### Function Arguments
+
+- The best functions have no arguments (niladic). One (monadic) or two (dyadic) are acceptable,
+  three (triadic) should be avoided, and more than three need strong justification but are still
+  discouraged.
+- Arguments add cognitive load. Removing them, like making shared data an instance variable instead
+  of an argument, simplifies code and eases reader understanding.
+- Testing grows harder with more arguments. No arguments are easiest, one is manageable, two is
+  harder, and more than two makes testing combinations complex.
+- Output arguments are confusing because we expect data to go in via arguments and out via return
+  values, making output via arguments harder to understand.
+- Common Monadic Forms:
+  - Single-argument functions usually ask a question or transform the input. Use clear, consistent
+    names to reflect the function's purpose and meet reader expectations.
+  - Single-argument functions can also represent events that change system state. Use them carefully
+    with clear names and context to show they are event-driven.
+- Flag Arguments: Flag arguments are bad practice. They signal the function does more than one
+  thing, making the code harder to read and the method signature more complex.
+- Dyadic Functions:
+  - Two-argument functions are harder to read unless the arguments form a natural pair, like
+    coordinates. Unrelated arguments add complexity and risk being overlooked.
+  - Even common dyads like assertEquals(expected, actual) can confuse due to lack of natural order.
+    When possible, refactor dyads into monads to improve clarity and reduce errors.
+- Triads: Triads are much harder to understand than dyads due to confusion with argument order and
+  meaning. Use them only when truly necessary and with extra care.
+- Argument Objects: If a function needs many arguments, group related ones into a class. This
+  reduces complexity and often reveals meaningful concepts, like using Point instead of *x* and *y*.
+- Argument Lists: Variable argument functions follow the same rules as fixed ones. If *args* are
+  treated the same, it's like passing a list, so keep total arguments within monad to triad limits.
+- Verbs and Keywords: Good function names explain intent and argument order. Use verb/noun pairs or
+  keyword-style names like *assertExpectedEqualsActual* to reduce confusion and improve readability.
+
+### Have No Side Effects
+
+- Side effects break a function's promise by causing hidden changes to variables or globals, leading
+  to bugs, order dependencies, and hard-to-find issues in code behavior.
+- Output Arguments: Arguments should clearly be inputs. Output arguments cause confusion and force
+  readers to check signatures. In OO languages, use object methods instead to avoid this.
+
+### Command Query Separation
+
+- A function should either perform an action or return information, not both. Mixing these roles
+  causes confusion and makes code harder to understand.
+
+### Prefer Exceptions to Returning Error Codes
+
+- Returning error codes from commands breaks command-query separation and forces immediate error
+  handling, leading to nested code and reduced clarity.
+- Try/catch blocks clutter code by mixing error and normal logic. Extract them into separate
+  functions, so each handles one task, with try as the first word and nothing after catch.
+
+### Don't Repeat Yourself
+
+- Code duplication hides easily, adds bloat, and increases the chance of errors. Removing it
+  improves clarity and reflects a core goal of many programming paradigms and practices.
+
+### Structured Programming
+
+- Single-entry, single-exit rules help in large functions, but with small functions, multiple
+  returns, breaks, or continues can improve clarity. *Goto* should still be avoided.
+
+### How Do You Write Functions Like This?
+
+- Writing code is like writing prose: the first draft is messy, but through refactoring, renaming,
+  and testing, it becomes clean and well-structured. It's an iterative process.
 
 ---
