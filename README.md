@@ -39,6 +39,11 @@
     - [Don't Repeat Yourself](#dont-repeat-yourself)
     - [Structured Programming](#structured-programming)
     - [How Do You Write Functions Like This?](#how-do-you-write-functions-like-this)
+  - [Chapter 4: Comments](#chapter-4-comments)
+    - [Comments Do Not Make Up for Bad Code](#comments-do-not-make-up-for-bad-code)
+    - [Explain Yourself in Code](#explain-yourself-in-code)
+    - [Good Comments](#good-comments)
+    - [Bad Comments](#bad-comments)
 
 ---
 
@@ -366,5 +371,81 @@ public Money CalculatePay(Employee e)
 
 - Writing code is like writing prose: the first draft is messy, but through refactoring, renaming,
   and testing, it becomes clean and well-structured. It's an iterative process.
+
+---
+
+## Chapter 4: Comments
+
+- Comments can help but often harm when outdated or excessive; they're a necessary evil, not pure
+  good, ideally replaced by clear, expressive code.
+- Comments reflect our failure to express intent in code; use them only when necessary, and always
+  prefer clear code over commentary.
+- They often become inaccurate over time as code evolves, leading to misinformation, since
+  they're hard to maintain and easy to overlook.
+- Clear, expressive code is better than comments; inaccurate comments mislead, while only code holds
+  the true, reliable source of information.
+
+### Comments Do Not Make Up for Bad Code
+
+- Don't use comments to excuse messy code. Clean and clarify the code instead, as clear code with
+  few comments is far better than confusing code with many.
+
+### Explain Yourself in Code
+
+- Code can often explain intent clearly; instead of commenting, write functions that express what
+  you mean—it usually takes just a bit of thought.
+
+### Good Comments
+
+- Legal Comments: Legal comments like copyrights are fine, but keep them brief. Refer to external
+  documents instead of embedding full legal terms in the code.
+- Informative Comments: Use function or class names to convey meaning instead of comments. When
+  comments are needed, clear structure or naming may make them unnecessary.
+- Explanation of Intent: Comments that explain intent behind decisions, like custom sorting or
+  stress testing with threads, add value—even if the implementation is debatable.
+- Clarification: Clarifying comments can help explain obscure values, especially in standard or
+  unchangeable code, but clarity should be built into the code when possible.
+- Warning of Consequences: Warning comments are useful when explaining risks or non-obvious
+  behavior, especially in legacy code or when preventing common but unsafe optimizations.
+- TODO Comments: TODO comments are useful reminders for future fixes or changes, but they must not
+  justify bad code and should be reviewed and cleaned up regularly.
+- Amplification: A comment may be used to amplify the importance of something that may otherwise
+  seem inconsequential.
+
+### Bad Comments
+
+- Mumbling: Don't write vague or rushed comments just to meet a process. A comment must clearly
+  explain intent; unclear ones only confuse and force others to dig through code.
+- Redundant Comments: Redundant comments that restate obvious code waste time, obscure clarity, and
+  offer no real value. Clear code needs no empty reassurances or filler documentation.
+- Misleading Comments: Vague or imprecise comments can mislead and waste time. When comments subtly
+  misstate behavior, they create false expectations and debugging headaches.
+- Mandated Comments: Mandatory comments for every function or variable add clutter, invite
+  confusion, and often mislead more than they help.
+- Journal Comments: Change logs in code files are obsolete clutter now that version control systems
+  track edits. These outdated journals should be removed to keep code clean.
+- Noise Comments: Noisy comments that restate the obvious or vent frustration add no value and
+  become ignored. Channel that energy into cleaner code instead of cluttering it.
+- Scary Noise: Redundant comments like these add no value and often include careless errors. If a
+  comment just repeats the code, it's noise and should be removed.
+- Don't Use a Comment When You Can Use a Function or a Variable.
+- Position Markers: Banner comments can help group code but often become clutter. Use them rarely
+  and only when they add real clarity, or they'll just blend into the noise.
+- Closing Brace Comments: Marking closing braces adds clutter in small, clean functions. If you feel
+  the need for them, it's a sign your function might be too long and needs refactoring.
+- Attributions and Bylines: Author tags like `/* Added by Jayaseelan */` become outdated and clutter
+  code. Use version control systems to track authorship instead of embedding it in comments.
+- Commented-Out Code: It creates confusion and clutter. With version control systems in place,
+  there's no excuse not to delete unused code instead of leaving it behind.
+- HTML Comments: HTML in comments clutters code and reduces readability in editors. Let
+  documentation tools handle formatting instead of embedding HTML manually.
+- Nonlocal Information: Comments should describe nearby code only. Including unrelated system
+  details creates confusion and risks becoming outdated or misleading.
+- Too Much Information: Avoid stuffing comments with irrelevant history or excessive detail. Focus
+  on what helps the reader understand the code, not on unnecessary background.
+- Inobvious Comments: A comment should clearly relate to the code it describes. If it's vague or
+  confusing, it fails its purpose and may need as much explanation as the code itself.
+- Function Headers: Short functions don't need much description. A well-chosen name for a small
+  function that does one thing is usually better than a comment header.
 
 ---
