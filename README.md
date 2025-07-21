@@ -44,6 +44,11 @@
     - [Explain Yourself in Code](#explain-yourself-in-code)
     - [Good Comments](#good-comments)
     - [Bad Comments](#bad-comments)
+  - [Chapter 5: Formatting](#chapter-5-formatting)
+    - [The Purpose of Formatting](#the-purpose-of-formatting)
+    - [Vertical Formatting](#vertical-formatting)
+    - [Horizontal Formatting](#horizontal-formatting)
+    - [Team Rules](#team-rules)
 
 ---
 
@@ -447,5 +452,67 @@ public Money CalculatePay(Employee e)
   confusing, it fails its purpose and may need as much explanation as the code itself.
 - Function Headers: Short functions don't need much description. A well-chosen name for a small
   function that does one thing is usually better than a comment header.
+
+---
+
+## Chapter 5: Formatting
+
+- Clean, consistent code signals professionalism. Use simple formatting rules, apply them strictly,
+  and automate them if possible to maintain quality and trust.
+
+### The Purpose of Formatting
+
+- Code formatting is vital for communication. Readability impacts future changes more than current
+  functionality. Style and discipline outlive the original code.
+
+### Vertical Formatting
+
+- Smaller source files, ideally under 200–500 lines, are easier to understand and maintain. Large
+  systems can be built effectively using many small, focused files.
+- The Newspaper Metaphor:
+  - A source file should read like a newspaper: start with a clear name and overview, then reveal
+    more detail gradually, ending with the lowest-level functions and specifics.
+  - Like newspapers with short, focused articles, code should be split into small, organized parts.
+    Long, disorganized files discourage reading and understanding.
+- Vertical Openness Between Concepts: Use blank lines to separate concepts in code. They create
+  visual cues, improve layout, and make scanning easier by highlighting distinct concepts.
+- Vertical Density: Vertically dense code signals related logic. Keeping tightly related lines close
+  improves readability and reduces eye movement for faster understanding.
+- Vertical Distance:
+  - Keep closely related code concepts near each other to avoid confusion and reduce scrolling.
+    Vertical proximity improves understanding and eases code navigation.
+  - Declare variables close to where they're used. In short functions, place them at the top; for
+    loops, declare control variables in the loop when possible.
+  - Instance variables should be declared at the top of the class, in a consistent, visible
+    place, since they're often used by many methods and need to be easy to find.
+  - Place dependent functions close together with the caller above the callee to enhance flow and
+    readability. Constants should be declared at meaningful, visible levels.
+  - Code elements with strong conceptual affinity should be placed close together, even if not
+    directly dependent, to reflect their related purpose and improve clarity.
+- Vertical Ordering: Function calls should flow downward, with high-level logic at the top and
+  details below. This mirrors a newspaper format, letting readers grasp key ideas before diving into
+  details.
+
+### Horizontal Formatting
+
+- Keep lines short for readability. Aim for under 100–120 characters, as most code naturally fits
+  within that. Excessively long lines reduce clarity and signal carelessness.
+- Horizontal Openness and Density: Use horizontal white space to clarify relationships in code.
+  Space separates weakly related elements, while tightly related ones stay close for better
+  readability and meaning.
+- Horizontal Alignment: Avoid horizontal alignment in declarations or assignments. Long aligned
+  lists reveal a deeper issue—the code is too long, not that it's misaligned.
+- Indentation:
+  - Indentation reflects the code's hierarchical structure and scopes, making it easier to read,
+    scan, and understand. Without it, source files become hard to navigate and comprehend.
+  - Avoid breaking indentation rules, even for short code blocks. Skipping proper indentation
+    usually reduces clarity and often leads to reverting the change later.
+- Dummy Scopes: Avoid dummy loop bodies, but if unavoidable, use proper indentation and braces to
+  make lone semicolons visible and prevent logic errors.
+
+### Team Rules
+
+- A team should follow one agreed formatting style to ensure consistency. Unified code style
+  improves readability and prevents confusion across the codebase.
 
 ---
