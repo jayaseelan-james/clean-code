@@ -54,6 +54,15 @@
     - [Data/Object Anti-Symmetry](#dataobject-anti-symmetry)
     - [The Law of Demeter](#the-law-of-demeter)
     - [Data Transfer Objects](#data-transfer-objects)
+  - [Chapter 7: Error Handling](#chapter-7-error-handling)
+    - [Use Exceptions Rather Than Return Codes](#use-exceptions-rather-than-return-codes)
+    - [Write Your Try-Catch-Finally Statement First](#write-your-try-catch-finally-statement-first)
+    - [Use Unchecked Exceptions](#use-unchecked-exceptions)
+    - [Provide Context with Exceptions](#provide-context-with-exceptions)
+    - [Define Exception Classes in Terms of a Caller's Needs](#define-exception-classes-in-terms-of-a-callers-needs)
+    - [Define the Normal Flow](#define-the-normal-flow)
+    - [Don't Return Null](#dont-return-null)
+    - [Don't Pass Null](#dont-pass-null)
 
 ---
 
@@ -571,5 +580,58 @@ public Money CalculatePay(Employee e)
   systems like databases or sockets before converting to full objects.
 - Active Records are DTOs with methods like *save* or *find*. Adding business logic to them creates
   messy hybrids. Keep logic in separate objects to preserve clean design.
+
+---
+
+## Chapter 7: Error Handling
+
+- Error handling is vital, but if it clutters the code and hides core logic, it violates the
+  principles of clean code.
+
+### Use Exceptions Rather Than Return Codes
+
+- Older languages lacked exceptions, forcing error flags or codes that cluttered and confused logic.
+  Throwing exceptions keeps calling code cleaner and more readable.
+- Separating error handling from logic improves code by isolating concerns, making each easier to
+  understand on its own.
+
+### Write Your Try-Catch-Finally Statement First
+
+- Try blocks define a scope where execution may abort, and catch must restore consistency. Begin
+  with try-catch-finally to ensure clear, reliable behavior.
+- Write tests that trigger exceptions first, then build handlers to pass them. This helps define and
+  preserve the transactional scope of the try block.
+
+### Use Unchecked Exceptions
+
+- Checked exceptions seemed useful but break encapsulation by forcing wide code changes. Many robust
+  languages work fine without them, raising doubts about their true value.
+
+### Provide Context with Exceptions
+
+- Exceptions should include clear messages about what failed and why, since stack traces lack
+  intent. Provide context to help identify the error's source and support useful logging.
+
+### Define Exception Classes in Terms of a Caller's Needs
+
+- Errors can be classified by source or type, but when defining exceptions, focus on how they will
+  be caught in the application.
+- Wrap third-party APIs to reduce dependency, ease testing, and allow future changes. Use one
+  exception class unless distinct handling is needed for different errors.
+
+### Define the Normal Flow
+
+- Separating error handling from logic creates cleaner code, but pushing detection to the edges may
+  not fit all cases, especially when you don't want to abort execution.
+
+### Don't Return Null
+
+- Returning null invites errors and burdens callers. Instead, throw exceptions or return special
+  case objects to avoid fragile null checks and improve reliability.
+
+### Don't Pass Null
+
+- Passing null into methods is worse than returning it. Avoid it unless required, and treat null
+  arguments as errors to reduce mistakes and improve code safety.
 
 ---
