@@ -49,6 +49,11 @@
     - [Vertical Formatting](#vertical-formatting)
     - [Horizontal Formatting](#horizontal-formatting)
     - [Team Rules](#team-rules)
+  - [Chapter 6: Objects and Data Structures](#chapter-6-objects-and-data-structures)
+    - [Data Abstraction](#data-abstraction)
+    - [Data/Object Anti-Symmetry](#dataobject-anti-symmetry)
+    - [The Law of Demeter](#the-law-of-demeter)
+    - [Data Transfer Objects](#data-transfer-objects)
 
 ---
 
@@ -514,5 +519,57 @@ public Money CalculatePay(Employee e)
 
 - A team should follow one agreed formatting style to ensure consistency. Unified code style
   improves readability and prevents confusion across the codebase.
+
+---
+
+## Chapter 6: Objects and Data Structures
+
+### Data Abstraction
+
+- Abstraction hides implementation by exposing essential behavior, not just adding getters and
+  setters. Thoughtful design matters more than blindly exposing data.
+
+### Data/Object Anti-Symmetry
+
+- Objects hide data and expose behavior, while data structures expose data with little behavior.
+  Their opposite nature has deep design implications.
+- This exposes the fundamental dichotomy between objects and data structures:
+
+  ``` md
+  Procedural code (code using data structures) makes it easy to add new functions without changing
+  the existing data structures. OO code, on the other hand, makes it easy to add new classes without
+  changing existing functions.
+  ```
+
+- OO suits adding new types, procedures suit adding new functions. Mature developers know not
+  everything should be an object—sometimes simple data and procedures work best.
+
+### The Law of Demeter
+
+- The Law of Demeter advises that modules should not know internal details of other objects. Using
+  accessors can break encapsulation by revealing internal structure.
+- The Law of Demeter says that a method *f* of a class *C* should only call the methods of these:
+  - *C*
+  - An object created by *f*
+  - An object passed as an argument to *f*
+  - An object held in an instance variable of *C*
+- The method should not invoke methods on objects that are returned by any of the allowed functions.
+  In other words, talk to friends, not to strangers.
+- Train Wrecks:
+  - Call chains reveal too much object structure and should be avoided. They violate the Law of
+    Demeter by making one function aware of many internal object layers.
+  - Objects should hide structure, but data structures may expose it. Accessors often blur this
+    line.
+- Hybrids: Hybrid structures mix object behavior with exposed data, making code harder to extend.
+  They reflect unclear design and should be avoided for clean architecture.
+- Hiding Structure: Mixing low-level details in code is messy. Instead, let the object handle the
+  task to hide internals and avoid violating the Law of Demeter by exposing object structure.
+
+### Data Transfer Objects
+
+- A DTO is a class with public variables and no functions, ideal for transferring raw data between
+  systems like databases or sockets before converting to full objects.
+- Active Records are DTOs with methods like *save* or *find*. Adding business logic to them creates
+  messy hybrids. Keep logic in separate objects to preserve clean design.
 
 ---
