@@ -69,6 +69,12 @@
     - [Learning Tests Are Better Than Free](#learning-tests-are-better-than-free)
     - [Using Code That Does Not Yet Exist](#using-code-that-does-not-yet-exist)
     - [Clean Boundaries](#clean-boundaries)
+  - [Chapter 9: Unit Tests](#chapter-9-unit-tests)
+    - [The Three Laws of TDD](#the-three-laws-of-tdd)
+    - [Keeping Tests Clean](#keeping-tests-clean)
+    - [Clean Tests](#clean-tests)
+    - [One Assert per Test](#one-assert-per-test)
+    - [F.I.R.S.T.](#first)
 
 ---
 
@@ -676,5 +682,60 @@ public Money CalculatePay(Employee e)
 
 - Boundaries must be clear and well-tested to handle change. Limit reliance on third-party code by
   wrapping or adapting it to protect flexibility and control.
+
+---
+
+## Chapter 9: Unit Tests
+
+### The Three Laws of TDD
+
+1. You may *not* write production code until you have written a failing unit test.
+2. You may *not* write more of a unit test than is sufficient to fail, and not compiling is failing.
+3. You may *not* write more production code than is sufficient to pass the currently failing test.
+
+- Writing tests alongside code in short cycles ensures full coverage but can lead to a large,
+  hard-to-manage test suite. Thus, have them clean to ease maintenance.
+
+### Keeping Tests Clean
+
+- Neglecting test code quality leads to fragile tests that are hard to maintain and can become a
+  bigger burden than having no tests at all.
+- Messy tests lead to costly maintenance, failed test efforts, and decaying code. Clean,
+  well-designed test code is essential to long-term software health.
+- Test code is just as important as production code.
+- Tests Enable the -ilities:
+  - Clean unit tests remove fear of change and make code flexible, maintainable, and safe to
+    improve—even with poor design.
+  - Tests enable all the -ilities, because tests enable change. Whereas, dirty tests block
+    improvement, leading to decaying code and eventual test loss.
+
+### Clean Tests
+
+- Clean tests prioritize readability through clarity, simplicity, and structure, making them easy to
+  understand and maintain.
+- Domain—Specific Testing Language: A test-specific API improves readability and evolves through
+  refactoring, creating a clear, expressive language for writing and understanding tests.
+- A Dual Standard: Test code can trade efficiency for clarity, but must remain clean, simple, and
+  expressive, despite differing standards from production code.
+
+### One Assert per Test
+
+- Limiting asserts in a test improves clarity. While one assert per test is ideal, using a few is
+  fine if they remain clear and concise. Minimize asserts to keep tests readable.
+- Single Concept per Test: Each test should focus on one concept with minimal asserts to keep intent
+  clear and avoid confusing, bloated test functions.
+
+### F.I.R.S.T.
+
+- Fast: Tests must be fast. Slow tests discourage frequent runs, delay bug detection, and reduce
+  code cleanup, leading to code rot.
+- Independent: Tests should not depend on each other. Tests must be independent. When one test
+  depends on another, failures cascade, hiding real issues and making debugging harder.
+- Repeatable: Tests should be repeatable in any environment. Non-repeatable tests cause unreliable
+  results and limit when and where you can test.
+- Self-Validating: The tests should have a boolean output. Tests must be self-validating with clear
+  pass or fail results. Manual checks make failures subjective and slow down development.
+- Timely: The tests need to be written in a timely fashion. Write unit tests before production code
+  to ensure testability and better design. Writing them after can make testing harder or neglected.
 
 ---
