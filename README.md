@@ -63,6 +63,12 @@
     - [Define the Normal Flow](#define-the-normal-flow)
     - [Don't Return Null](#dont-return-null)
     - [Don't Pass Null](#dont-pass-null)
+  - [Chapter 8: Boundaries](#chapter-8-boundaries)
+    - [Using Third-Party Code](#using-third-party-code)
+    - [Exploring and Learning Boundaries](#exploring-and-learning-boundaries)
+    - [Learning Tests Are Better Than Free](#learning-tests-are-better-than-free)
+    - [Using Code That Does Not Yet Exist](#using-code-that-does-not-yet-exist)
+    - [Clean Boundaries](#clean-boundaries)
 
 ---
 
@@ -633,5 +639,42 @@ public Money CalculatePay(Employee e)
 
 - Passing null into methods is worse than returning it. Avoid it unless required, and treat null
   arguments as errors to reduce mistakes and improve code safety.
+
+---
+
+## Chapter 8: Boundaries
+
+### Using Third-Party Code
+
+- Interface providers aim for broad use, while users seek tailored solutions. This mismatch often
+  leads to issues at system boundaries.
+- Exposing broad third-party interfaces in code can lead to misuse and fragile code. Encapsulating
+  them preserves intent, enforces rules, and improves clarity and maintainability.
+
+### Exploring and Learning Boundaries
+
+- Using third-party code saves time, but unclear usage can cause bugs. Writing tests helps clarify
+  behavior and isolate issues.
+- Learning and integrating third-party code together is tough. Writing learning tests helps verify
+  our understanding before using it in production.
+
+### Learning Tests Are Better Than Free
+
+- Learning tests clarify APIs at no extra cost and offer long-term value by detecting changes in
+  future releases.
+- These tests ensure third-party code behaves as expected and catch breaking changes early,
+  supporting clean boundaries and safer upgrades.
+
+### Using Code That Does Not Yet Exist
+
+- When facing unknown or undefined boundaries, define your own interface to keep code clean,
+  adaptable, and testable as understanding or APIs evolve.
+- Defining our own interface creates a testable seam, enabling unit tests with fakes and boundary
+  tests once the real API is available.
+
+### Clean Boundaries
+
+- Boundaries must be clear and well-tested to handle change. Limit reliance on third-party code by
+  wrapping or adapting it to protect flexibility and control.
 
 ---
