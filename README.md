@@ -75,6 +75,10 @@
     - [Clean Tests](#clean-tests)
     - [One Assert per Test](#one-assert-per-test)
     - [F.I.R.S.T.](#first)
+  - [Chapter 10: Classes](#chapter-10-classes)
+    - [Class Organization](#class-organization)
+    - [Classes Should Be Small!](#classes-should-be-small)
+    - [Organizing for Change](#organizing-for-change)
 
 ---
 
@@ -737,5 +741,47 @@ public Money CalculatePay(Employee e)
   pass or fail results. Manual checks make failures subjective and slow down development.
 - Timely: The tests need to be written in a timely fashion. Write unit tests before production code
   to ensure testability and better design. Writing them after can make testing harder or neglected.
+
+---
+
+## Chapter 10: Classes
+
+### Class Organization
+
+- Start classes with constants, then private variables. Public functions follow, with related
+  private helpers below, making code read top-down like an article.
+- Encapsulation: Prefer private variables and functions, but allow internal or protected access for
+  tests when needed. Privacy matters, but tests take priority when no better option exists.
+
+### Classes Should Be Small!
+
+- Classes should be small, even smaller than you think. Unlike functions measured by lines, class
+  size is judged by how many responsibilities it handles.
+- A class name should clearly reflect its responsibilities. If it's vague or hard to name, the class
+  likely does too much and needs to be split.
+- We should also be able to write a brief description of the class in about 25 words, without using
+  the words "if," "and," "or," or "but."
+- The Single Responsibility Principle:
+  - A class should have only one responsibility and one reason to change, guiding both its purpose
+    and size.
+  - SRP is simple but often ignored. We focus on making code work, not keeping it clean. Once it
+    works, we forget to refactor large classes into focused, single-purpose ones.
+  - Small, focused classes make systems easier to navigate. They reduce clutter, clarify purpose, and
+    help manage complexity better than a few large, overloaded ones.
+- Cohesion:
+  - A class should have few instance variables, with methods that use them closely. High cohesion
+    means methods and data work together as a unified, logical whole.
+  - Too many instance variables used by only some methods often signals a hidden class. Split them
+    into smaller, more cohesive classes with clear responsibilities.
+- Maintaining Cohesion Results in Many Small Classes: Breaking big functions into smaller ones may
+  reveal new classes. If methods share only some variables, split them into cohesive classes for
+  clearer, better-organized code.
+
+### Organizing for Change
+
+- Clean systems reduce change risk by isolating impact. New features should extend classes, not
+  modify them, keeping existing code stable and easier to maintain.
+- Isolating from Change: Code changes with needs, so depend on abstractions, not concrete details.
+  This reduces coupling, eases testing, and aligns with the Dependency Inversion Principle (DIP).
 
 ---
