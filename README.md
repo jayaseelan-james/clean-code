@@ -79,6 +79,14 @@
     - [Class Organization](#class-organization)
     - [Classes Should Be Small!](#classes-should-be-small)
     - [Organizing for Change](#organizing-for-change)
+  - [Chapter 11: Systems](#chapter-11-systems)
+    - [How Would You Build a City?](#how-would-you-build-a-city)
+    - [Separate Constructing a System from Using It](#separate-constructing-a-system-from-using-it)
+    - [Scaling Up](#scaling-up)
+    - [Test Drive the System Architecture](#test-drive-the-system-architecture)
+    - [Optimize Decision Making](#optimize-decision-making)
+    - [Use Standards Wisely, When They Add Demonstrable Value](#use-standards-wisely-when-they-add-demonstrable-value)
+    - [Systems Need Domain-Specific Languages](#systems-need-domain-specific-languages)
 
 ---
 
@@ -783,5 +791,59 @@ public Money CalculatePay(Employee e)
   modify them, keeping existing code stable and easier to maintain.
 - Isolating from Change: Code changes with needs, so depend on abstractions, not concrete details.
   This reduces coupling, eases testing, and aligns with the Dependency Inversion Principle (DIP).
+
+---
+
+## Chapter 11: Systems
+
+### How Would You Build a City?
+
+- Cities function through teamwork and modularity, and clean code aims to bring similar structure
+  and clarity to software, especially at the system level.
+
+### Separate Constructing a System from Using It
+
+- Building software is different from using it. Clean systems separate startup setup from runtime
+  logic, following the key principle of separating concerns.
+- Mixing setup code with runtime logic breaks modularity and SRP, making testing harder.
+- Separation of Main: Separating construction in main keeps dependencies one-way. The app just uses
+  objects, unaware of how they were built. This simplifies control flow and design.
+- Factories: Use Abstract Factory to let the app control object creation timing while hiding
+  construction details, keeping dependencies flowing from main to the app.
+- Dependency Injection: DI separates construction from use by letting external containers provide
+  dependencies, supporting SRP and flexible, passive object creation.
+
+### Scaling Up
+
+- Systems should grow iteratively like cities, adapting over time. Clean code and refactoring
+  support this at the code level, challenging the myth of perfect first-time design.
+- Software systems are unique compared to physical systems. Their architectures can grow
+  incrementally, if we maintain the proper separation of concerns.
+
+### Test Drive the System Architecture
+
+- Decoupling domain logic from architecture enables flexible, test-driven design and avoids the
+  rigidity and risk of Big Design Up Front.
+- High-performing systems use simple, loosely coupled designs that stay flexible while keeping clear
+  goals and adapting to change as needed.
+
+### Optimize Decision Making
+
+- Modularity enables decentralized decisions, essential for managing large systems like cities or
+  complex software.
+- Delaying decisions allows better choices with more insight, avoiding the risks of premature,
+  poorly informed commitments.
+
+### Use Standards Wisely, When They Add Demonstrable Value
+
+- Construction thrives on evolved standards, but in software, overreliance on hyped standards can
+  shift focus away from real customer value.
+
+### Systems Need Domain-Specific Languages
+
+- DSLs let developers write code in domain-specific terms, improving clarity and aligning closely
+  with expert knowledge.
+- Effective DSLs close the gap between domain concepts and code, raising abstraction and making
+  intent clearer, like agile does for team communication.
 
 ---
