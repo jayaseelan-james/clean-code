@@ -87,6 +87,13 @@
     - [Optimize Decision Making](#optimize-decision-making)
     - [Use Standards Wisely, When They Add Demonstrable Value](#use-standards-wisely-when-they-add-demonstrable-value)
     - [Systems Need Domain-Specific Languages](#systems-need-domain-specific-languages)
+  - [Chapter 12: Emergence](#chapter-12-emergence)
+    - [Getting Clean via Emergent Design](#getting-clean-via-emergent-design)
+    - [Simple Design Rule 1: Runs All the Tests](#simple-design-rule-1-runs-all-the-tests)
+    - [Simple Design Rules 2-4: Refactoring](#simple-design-rules-2-4-refactoring)
+    - [No Duplication](#no-duplication)
+    - [Expressive](#expressive)
+    - [Minimal Classes and Methods](#minimal-classes-and-methods)
 
 ---
 
@@ -845,5 +852,56 @@ public Money CalculatePay(Employee e)
   with expert knowledge.
 - Effective DSLs close the gap between domain concepts and code, raising abstraction and making
   intent clearer, like agile does for team communication.
+
+---
+
+## Chapter 12: Emergence
+
+### Getting Clean via Emergent Design
+
+- Kent Beck's four rules of Simple Design are of significant help in creating well-designed
+  software. According to Kent, a design is "simple" if it follows these rules:
+  - Run all the tests
+  - Contains no duplication
+  - Expresses the intent of the programmer
+  - Minimizes the number of classes and methods
+- The rules given are in the order of importance.
+
+### Simple Design Rule 1: Runs All the Tests
+
+- A system must be verifiable through testing. Testable systems lead to simpler, single-purpose
+  designs, making verification easier and design quality better.
+- Writing more tests encourages low coupling and high cohesion by using principles like DIP,
+  abstraction, and dependency injection, which improves overall design.
+
+### Simple Design Rules 2-4: Refactoring
+
+- Tests give us the safety to refactor often, keeping code clean. With each change, we check design
+  quality and rely on tests to ensure nothing breaks.
+- Refactoring lets us apply good design principles like cohesion and separation of concerns, while
+  removing duplication and improving clarity with fewer classes and methods.
+
+### No Duplication
+
+- Duplication adds risk, effort, and complexity. It appears in repeated or similar code and
+  implementations, all of which should be refactored to improve design.
+- Extracting small common code may reveal SRP violations and encourages reuse. Small-scale reuse
+  reduces complexity and is key to broader, system-wide reuse.
+
+### Expressive
+
+- Clear code reduces maintenance cost and defects. Use good names, small functions, and clear
+  structure to help others understand the system easily.
+- Using standard names and patterns improves code clarity. Expressive tests also serve as readable
+  documentation to help others quickly grasp class behavior.
+- The most important way to be expressive is to *try*. Refine names, simplify functions, and write
+  with future readers in mind—often, that reader will be you.
+
+### Minimal Classes and Methods
+
+- Avoid overdoing principles like SRP or duplication removal. Too many tiny classes or rigid rules
+  can harm clarity. Favor practical, balanced design over strict dogma.
+- Keep the system, classes, and functions small, but prioritize testing, removing duplication, and
+  clarity over reducing class or function count.
 
 ---
