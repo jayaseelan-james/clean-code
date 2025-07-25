@@ -94,6 +94,14 @@
     - [No Duplication](#no-duplication)
     - [Expressive](#expressive)
     - [Minimal Classes and Methods](#minimal-classes-and-methods)
+  - [Chapter 13: Concurrency](#chapter-13-concurrency)
+    - [Why Concurrency?](#why-concurrency)
+    - [Concurrency Defense Principles](#concurrency-defense-principles)
+    - [Know Your Execution Models](#know-your-execution-models)
+    - [Beware Dependencies Between Synchronized Methods](#beware-dependencies-between-synchronized-methods)
+    - [Keep Synchronized Sections Small](#keep-synchronized-sections-small)
+    - [Writing Correct Shut-Down Code Is Hard](#writing-correct-shut-down-code-is-hard)
+    - [Testing Threaded Code](#testing-threaded-code)
 
 ---
 
@@ -903,5 +911,123 @@ public Money CalculatePay(Employee e)
   can harm clarity. Favor practical, balanced design over strict dogma.
 - Keep the system, classes, and functions small, but prioritize testing, removing duplication, and
   clarity over reducing class or function count.
+
+---
+
+## Chapter 13: Concurrency
+
+- Writing clean concurrent code is very hard. It's easier to write single-threaded or flawed
+  multithreaded code that only fails under system stress.
+
+### Why Concurrency?
+
+- Concurrency separates what gets done from when it gets done, boosting throughput and clarity by
+  structuring apps as small collaborating units instead of one tightly coupled main loop.
+- Myths and Misconceptions:
+  - Concurrency always improves performance: Concurrency can improve performance, but only when
+    significant wait time exists and can be shared across threads or processors.
+  - Design does not change when writing concurrent programs: Concurrent program design often differs
+    greatly from single-threaded design, as decoupling what from when significantly impacts system
+    structure.
+  - Understanding concurrency issues is not important when working with a container.
+- Here are a few more balanced sound bites regarding writing concurrent software:
+  - Concurrency incurs some overhead, both in performance as well as writing additional code.
+  - Correct concurrency is complex, even for simple problems.
+  - Concurrency bugs aren't usually repeatable, so they are often ignored as one-offs instead of the
+    true defects they are.
+  - It often requires a fundamental change in design strategy.
+
+### Concurrency Defense Principles
+
+- Single Responsibility Principle (SRP):
+  - Concurrency is a valid reason for change and should be separated to follow SRP, yet it's often
+    wrongly mixed into core production code.
+  - Concurrency code has a unique life cycle, tougher challenges than regular code, and many failure
+    modes, so it should be kept separate from core application logic.
+  - *Recommendation*: Keep your concurrency-related code separate from other code.
+- Corollary: Limit the Scope of Data
+  - To avoid thread interference on shared data, use synchronized blocks, but keep critical sections
+    minimal to reduce complexity and risk.
+  - The more locations shared data is updated, the higher the risk of unguarded access, duplication,
+    and hard-to-trace failures.
+  - *Recommendation*: Take data encapsulation to heart; severely limit the access of any data that
+    may be shared.
+- Corollary: Use Copies of Data
+  - Avoiding shared data by using read-only copies or merging results later reduces issues and may
+    outperform synchronization despite extra object creation.
+- Corollary: Threads Should Be as Independent as Possible
+  - Design threads to work independently with unshared data and local variables, avoiding
+  synchronization and simplifying behavior.
+  - *Recommendation*: Attempt to partition data into independent subsets than can be operated on by
+    independent threads, possibly in different processors.
+
+### Know Your Execution Models
+
+- Understanding how to partition behavior in concurrent apps requires learning some definitions:
+  - Bound Resources: Resources of a fixed size or number used in a concurrent environment. Examples
+    include database connections and fixed-size read/write buffers.
+  - Mutual Exclusion: Only one thread can access shared data or a shared resource at a time.
+  - Starvation: One thread or a group of threads is prohibited from proceeding for an excessively
+    long time or forever. For example, always letting fast-running threads through first could
+    starve out longer running threads if there is no end to the fast-running threads.
+  - Deadlock: Two or more threads waiting for each other to finish. Each thread has a resource that
+    the other thread requires and neither can finish until it gets the other resource.
+  - Livelock: Threads in lockstep, each trying to do work but finding another "in the way." Due to
+    resonance, threads continue trying to make progress but are unable to for an excessively long
+    time—or forever.
+
+- Producer-Consumer: Producer threads add work to a bounded queue, and consumer threads take it.
+  Both signal and wait as needed, coordinating access based on queue state.
+- Readers-Writers: Balancing reader and writer access to shared data is hard; favoring one risks
+  starvation or poor throughput. Coordination must avoid stale reads and long blocks.
+- Dining Philosophers: This problem mirrors threads competing for resources, often leading to
+  deadlock, livelock, or performance issues if not carefully designed.
+- *Recommendation*: Learn these basic algorithms and understand their solutions.
+
+### Beware Dependencies Between Synchronized Methods
+
+- Dependencies between synchronized methods cause subtle bugs in concurrent code.
+- *Recommendation*: Avoid using more than one method on a shared object.
+- When using multiple methods on a shared object, correctness can be ensured in three ways:
+  - Client-Based Locking—Have the client lock the server before calling the first method and make
+    sure the lock's extent includes code calling the last method.
+  - Server-Based Locking—Within the server create a method that locks the server, calls all the
+    methods, and then unlocks. Have the client call the new method.
+  - Adapted Server—create an intermediary that performs the locking. This is an example of
+    server-based locking, where the original server cannot be changed.
+
+### Keep Synchronized Sections Small
+
+- Synchronized blocks ensure one thread at a time but add overhead, so keep critical sections
+  minimal to avoid contention and performance loss.
+- *Recommendation*: Keep your synchronized sections as small as possible.
+
+### Writing Correct Shut-Down Code Is Hard
+
+- Graceful shutdown in concurrent systems is tricky; deadlocks or blocked threads can prevent
+  shutdown, so handling it correctly requires careful design and testing.
+- *Recommendation*: Think about shut-down early and get it working early. It's going to take longer
+  than you expect. Review existing algorithms because this is probably harder than you think.
+
+### Testing Threaded Code
+
+- *Recommendation*: Write tests that have the potential to expose problems and then run them
+  frequently, with different programmatic configurations and system configurations and load. If
+  tests ever fail, track down the failure. Don't ignore a failure just because the tests pass on a
+  subsequent run.
+- A few more fine-grained recommendations:
+  - Treat spurious failures as candidate threading issues: Do not ignore system failures as one-offs.
+  - Get your nonthreaded code working first: Do not try to chase down nonthreading bugs and
+    threading bugs at the same time. Make sure your code works outside of threads.
+  - Make your threaded code pluggable: Make your thread-based code especially pluggable so that you
+    can run it in various configurations.
+  - Make your threaded code tunable: Tuning thread count needs trial and error. Make it easy to
+    adjust, monitor performance, and possibly enable dynamic or self-tuning based on system load.
+  - Run with more threads than processors: Running more threads than cores triggers frequent task
+    switching, increasing the chance of exposing missing critical sections or deadlocks.
+  - Run on different platforms: Run your threaded code on all target platforms early and often.
+  - Instrument your code to try and force failures: Use methods that can affect the order of
+    execution, thereby increasing the odds of detecting a flaw. Use jiggling strategies to ferret
+    out errors.
 
 ---
