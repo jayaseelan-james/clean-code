@@ -147,15 +147,15 @@
 - Neglecting clean code leads to failed redesigns, long delays, and endless cycles of messy systems.
   Clean code isn't optional—it's key to long-term success.
 - Attitude:
-  - Code degrades not just from external pressures but from our own lack of professionalism. The real
-    cause of messy code often lies within the developers themselves.
+  - Code degrades not just from external pressures but from our own lack of professionalism. The
+    real cause of messy code often lies within the developers themselves.
   - Just as doctors must refuse unsafe procedures, programmers must defend clean code, even against
     pressure, to act professionally and protect quality.
 - The Primal Conundrum: Making messy code to go faster is a false shortcut. Clean code is the only
   way to move quickly and meet deadlines without sacrificing quality.
 - Knowing clean code matters is not enough. Like art, recognizing good code doesn't mean you know
   how to create it—you must learn how to write it well.
-- Clean code comes from discipline and a developed “code-sense” that guides programmers to transform
+- Clean code comes from discipline and a developed "code-sense" that guides programmers to transform
   messy code into elegant, effective systems.
 - What is Clean Code?
   - *Bjarne Stroustrup*: I like my code to be elegant and efficient. Code should be clear, minimal,
@@ -217,7 +217,7 @@
   meaningful differences, not arbitrary changes or errors.
 - Avoid number-series names like a1, a2 as they lack meaning and give no insight into the author's
   intent.
-- Avoid noise words like *Info*, *Data*, or *Object* in names, as they add no real meaning. Use
+- Avoid noise words like `Info`, `Data`, or `Object` in names, as they add no real meaning. Use
   naming that clearly distinguishes purpose without redundancy.
 
 ### Use Pronounceable Names
@@ -243,7 +243,7 @@
   languages support clear, type-safe code, making such encodings unnecessary today.
 - Prefixes like **m_** for member variables are no longer needed. Modern tools and clean, small code
   make such markers unnecessary and eventually just visual clutter.
-- Avoid prefixing interfaces with letters like **I**. Name interfaces clearly and, if needed, encode
+- Avoid prefixing interfaces with letters like `I`. Name interfaces clearly and, if needed, encode
   only the implementation to reduce distraction and reveal intent.
 
 ### Avoid Mental Mapping
@@ -255,13 +255,13 @@
 
 ### Class Names
 
-- Class and object names should be nouns or noun phrases, not verbs, like *Customer* or *Account*.
-  Avoid vague terms like *Manager*, *Processor*, *Data* or *Info* in the name for clarity.
+- Class and object names should be nouns or noun phrases, not verbs, like `Customer` or `Account`.
+  Avoid vague terms like `Manager`, `Processor`, `Data` or `Info` in the name for clarity.
 
 ### Method Names
 
-- Methods should have verbs or verb phrase names like *PostPayment*, *DeletePage* or *Save*.
-  Accessors, mutators, and predicates may use *Get*, *Set*, and *Is* as prefix for clarity.
+- Methods should have verbs or verb phrase names like `PostPayment`, `DeletePage` or `Save`.
+  Accessors, mutators, and predicates may use `Get`, `Set`, and `Is` as prefix for clarity.
 
 ### Don't Be Cute
 
@@ -272,7 +272,7 @@
 ### Pick One Word per Concept
 
 - Use consistent terms for the same concept to avoid confusion and save time. Mixing synonyms like
-  *fetch*, *retrieve*, and *get* can make code harder to understand and maintain.
+  `fetch, `retrieve`, and `get` can make code harder to understand and maintain.
 - Function names must be clear and consistent, since modern tools often show little context. Good
   method names help you choose the right one quickly without extra digging.
 - A consistent lexicon is a great boon to the programmers who must use your code.
@@ -281,7 +281,7 @@
 
 - Do not use the same word for different meanings. Reusing terms for separate ideas causes
   confusion. One word per concept keeps naming clear and consistent.
-- Avoid reusing names like *add* with different meanings. Use precise names to prevent confusion and
+- Avoid reusing names like `add` with different meanings. Use precise names to prevent confusion and
   make code easier to read and understand.
 
 ### Use Solution Domain Names
@@ -297,8 +297,8 @@
 ### Add Meaningful Context
 
 - Most names need context for clarity. Use well-named classes or functions to provide it, and only
-  use prefixes when absolutely necessary. For instance, variables named *firstName*, *lastName*,
-  *city*, *state*, etc. could be grouped into a class to represent a concept like an *Address*.
+  use prefixes when absolutely necessary. For instance, variables named `firstName`, `lastName`,
+  `city`, `state`, etc. could be grouped into a class to represent a concept like a `Address`.
 
 ### Don't Add Gratuitous Context
 
@@ -323,7 +323,7 @@
 
 - Functions should do one thing. They should do it well. They should do it only.
 - The idea that functions should do one thing is hard to apply, as it's unclear whether a function
-  like *RenderPageWithSetupsAndTeardowns* is doing one task or several at different abstraction
+  like `RenderPageWithSetupsAndTeardowns` is doing one task or several at different abstraction
   levels.
 - A function does one thing if its steps are just one level below its name; mixing abstraction
   levels means it's doing more than one thing.
@@ -345,7 +345,7 @@
 - Switch statements are hard to keep small or focused, so they should be isolated in low-level
   classes and replaced with polymorphism when possible.
 
-``` csharp Payroll.cs
+``` csharp
 public Money CalculatePay(Employee e)
 {
     return e.Type switch
@@ -358,11 +358,11 @@ public Money CalculatePay(Employee e)
 }
 ```
 
-- This function is large, violates Single Responsibility Principle (SRP) and Open Closed Principle
-  (OCP), grows with new types, and sets a pattern for many similar functions to repeat the same
-  flawed structure.
-- Use a hidden switch in an abstract factory to create polymorphic *Employee* objects, allowing
-  functions like *CalculatePay* to dispatch via inheritance, not conditionals.
+- This function is large, violates *Single Responsibility Principle* (SRP) and *Open Closed
+  Principle* (OCP), grows with new types, and sets a pattern for many similar functions to repeat
+  the same flawed structure.
+- Use a hidden switch in an abstract factory to create polymorphic `Employee` objects, allowing
+  functions like `CalculatePay` to dispatch via inheritance, not conditionals.
 
 ### Use Descriptive Names
 
@@ -373,9 +373,9 @@ public Money CalculatePay(Employee e)
 
 ### Function Arguments
 
-- The best functions have no arguments (niladic). One (monadic) or two (dyadic) are acceptable,
-  three (triadic) should be avoided, and more than three need strong justification but are still
-  discouraged.
+- The best functions have no arguments (*niladic*). One (*monadic*) or two (*dyadic*) are
+  acceptable, three (*triadic*) should be avoided, and more than three need strong justification but
+  are still discouraged.
 - Arguments add cognitive load. Removing them, like making shared data an instance variable instead
   of an argument, simplifies code and eases reader understanding.
 - Testing grows harder with more arguments. No arguments are easiest, one is manageable, two is
@@ -397,11 +397,11 @@ public Money CalculatePay(Employee e)
 - Triads: Triads are much harder to understand than dyads due to confusion with argument order and
   meaning. Use them only when truly necessary and with extra care.
 - Argument Objects: If a function needs many arguments, group related ones into a class. This
-  reduces complexity and often reveals meaningful concepts, like using Point instead of *x* and *y*.
-- Argument Lists: Variable argument functions follow the same rules as fixed ones. If *args* are
+  reduces complexity and often reveals meaningful concepts, like using Point instead of `x` and `y`.
+- Argument Lists: Variable argument functions follow the same rules as fixed ones. If `args` are
   treated the same, it's like passing a list, so keep total arguments within monad to triad limits.
 - Verbs and Keywords: Good function names explain intent and argument order. Use verb/noun pairs or
-  keyword-style names like *assertExpectedEqualsActual* to reduce confusion and improve readability.
+  keyword-style names like `AssertExpectedEqualsActual` to reduce confusion and improve readability.
 
 ### Have No Side Effects
 
@@ -430,7 +430,7 @@ public Money CalculatePay(Employee e)
 ### Structured Programming
 
 - Single-entry, single-exit rules help in large functions, but with small functions, multiple
-  returns, breaks, or continues can improve clarity. *Goto* should still be avoided.
+  returns, breaks, or continues can improve clarity. `Goto` should still be avoided.
 
 ### How Do You Write Functions Like This?
 
@@ -545,8 +545,8 @@ public Money CalculatePay(Employee e)
     loops, declare control variables in the loop when possible.
   - Instance variables should be declared at the top of the class, in a consistent, visible
     place, since they're often used by many methods and need to be easy to find.
-  - Place dependent functions close together with the caller above the callee to enhance flow and
-    readability. Constants should be declared at meaningful, visible levels.
+  - Place dependent functions close together with the *caller* above the *callee* to enhance flow
+    and readability. Constants should be declared at meaningful, visible levels.
   - Code elements with strong conceptual affinity should be placed close together, even if not
     directly dependent, to reflect their related purpose and improve clarity.
 - Vertical Ordering: Function calls should flow downward, with high-level logic at the top and
@@ -603,11 +603,11 @@ public Money CalculatePay(Employee e)
 
 - The Law of Demeter advises that modules should not know internal details of other objects. Using
   accessors can break encapsulation by revealing internal structure.
-- The Law of Demeter says that a method *f* of a class *C* should only call the methods of these:
-  - *C*
-  - An object created by *f*
-  - An object passed as an argument to *f*
-  - An object held in an instance variable of *C*
+- The Law of Demeter says that a method `f` of a class `C` should only call the methods of these:
+  - `C`
+  - An object created by `f`
+  - An object passed as an argument to `f`
+  - An object held in an instance variable of `C`
 - The method should not invoke methods on objects that are returned by any of the allowed functions.
   In other words, talk to friends, not to strangers.
 - Train Wrecks:
@@ -624,7 +624,7 @@ public Money CalculatePay(Employee e)
 
 - A DTO is a class with public variables and no functions, ideal for transferring raw data between
   systems like databases or sockets before converting to full objects.
-- Active Records are DTOs with methods like *save* or *find*. Adding business logic to them creates
+- Active Records are DTOs with methods like `save` or `find`. Adding business logic to them creates
   messy hybrids. Keep logic in separate objects to preserve clean design.
 
 ---
@@ -737,10 +737,10 @@ public Money CalculatePay(Employee e)
 - Messy tests lead to costly maintenance, failed test efforts, and decaying code. Clean,
   well-designed test code is essential to long-term software health.
 - Test code is just as important as production code.
-- Tests Enable the -ilities:
+- Tests Enable the *-ilities*:
   - Clean unit tests remove fear of change and make code flexible, maintainable, and safe to
     improve—even with poor design.
-  - Tests enable all the -ilities, because tests enable change. Whereas, dirty tests block
+  - Tests enable all the *-ilities*, because tests enable change. Whereas, dirty tests block
     improvement, leading to decaying code and eventual test loss.
 
 ### Clean Tests
@@ -796,8 +796,8 @@ public Money CalculatePay(Employee e)
     and size.
   - SRP is simple but often ignored. We focus on making code work, not keeping it clean. Once it
     works, we forget to refactor large classes into focused, single-purpose ones.
-  - Small, focused classes make systems easier to navigate. They reduce clutter, clarify purpose, and
-    help manage complexity better than a few large, overloaded ones.
+  - Small, focused classes make systems easier to navigate. They reduce clutter, clarify purpose,
+    and help manage complexity better than a few large, overloaded ones.
 - Cohesion:
   - A class should have few instance variables, with methods that use them closely. High cohesion
     means methods and data work together as a unified, logical whole.
@@ -812,7 +812,7 @@ public Money CalculatePay(Employee e)
 - Clean systems reduce change risk by isolating impact. New features should extend classes, not
   modify them, keeping existing code stable and easier to maintain.
 - Isolating from Change: Code changes with needs, so depend on abstractions, not concrete details.
-  This reduces coupling, eases testing, and aligns with the Dependency Inversion Principle (DIP).
+  This reduces coupling, eases testing, and aligns with the *Dependency Inversion Principle* (DIP).
 
 ---
 
@@ -1023,8 +1023,9 @@ public Money CalculatePay(Employee e)
   tests ever fail, track down the failure. Don't ignore a failure just because the tests pass on a
   subsequent run.
 - A few more fine-grained recommendations:
-  - Treat spurious failures as candidate threading issues: Do not ignore system failures as one-offs.
-  - Get your nonthreaded code working first: Do not try to chase down nonthreading bugs and
+  - Treat spurious failures as candidate threading issues: Do not ignore system failures as
+    one-offs.
+  - Get your nonthreaded code working first: Do not try to chase down non-threading bugs and
     threading bugs at the same time. Make sure your code works outside of threads.
   - Make your threaded code pluggable: Make your thread-based code especially pluggable so that you
     can run it in various configurations.
@@ -1227,7 +1228,7 @@ public Money CalculatePay(Employee e)
 - *N6: Avoid Encodings*
   - Avoid encoding names with type or scope info like *m_*. Modern tools make such prefixes
     unnecessary and distracting.
-- *N7: Names Should Describe Side-Effects*
+- *N7: Names Should Describe Side Effects*
   - Names should reveal all actions a function performs. Avoid hiding side effects with simple
     names. Be explicit if a function does more than it appears.
 
