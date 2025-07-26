@@ -102,6 +102,13 @@
     - [Keep Synchronized Sections Small](#keep-synchronized-sections-small)
     - [Writing Correct Shut-Down Code Is Hard](#writing-correct-shut-down-code-is-hard)
     - [Testing Threaded Code](#testing-threaded-code)
+  - [Chapter 17: Smells and Heuristics](#chapter-17-smells-and-heuristics)
+    - [Comments](#comments)
+    - [Environment](#environment)
+    - [Functions](#functions)
+    - [General](#general)
+    - [Names](#names)
+    - [Tests](#tests)
 
 ---
 
@@ -1029,5 +1036,228 @@ public Money CalculatePay(Employee e)
   - Instrument your code to try and force failures: Use methods that can affect the order of
     execution, thereby increasing the odds of detecting a flaw. Use jiggling strategies to ferret
     out errors.
+
+---
+
+## Chapter 17: Smells and Heuristics
+
+### Comments
+
+- *C1: Inappropriate Information*
+  - Use comments only for technical notes on code and design. Comments shouldn't store metadata like
+    change history or authorship; that belongs in version control.
+- *C2: Obsolete Comment*
+  - Obsolete comments are misleading and irrelevant. Avoid writing them, and remove or update
+    outdated ones promptly to keep code clear and accurate.
+- *C3: Redundant Comment*
+  - A comment is redundant if it describes something that adequately describes itself. Comments
+    should say things that the code cannot say for itself.
+- *C4: Poorly Written Comment*
+  - Write comments with care and clarity. Use proper grammar, be concise, and avoid stating the
+    obvious or rambling. Quality comments reflect thoughtful writing.
+- *C5: Commented-Out Code*
+  - Commented-out code is outdated, distracting, and useless. Delete it without fear—version control
+    keeps history if it's ever needed.
+
+### Environment
+
+- *E1: Build Requires More Than One Step*
+  - Building a project should be simple: one command to check it out, another to build it. Avoid
+    complex steps, scattered files, or dependencies.
+- *E2: Tests Require More Than One Step*
+  - Running all unit tests should be quick and easy—ideally one button click or a single shell
+    command—making testing fast and always accessible.
+
+### Functions
+
+- *F1: Too Many Arguments*
+  - Functions should have few arguments: none is ideal, then one, two, or three. Avoid using more
+    than three as it reduces clarity and maintainability.
+- *F2: Output Arguments*
+  - Avoid output arguments—they're confusing. Let functions modify the object's state instead of
+    returning changes through arguments.
+- *F3: Flag Arguments*
+  - Boolean arguments loudly declare that the function does more than one thing. They are confusing
+    and should be eliminated.
+- *F4: Dead Function*
+  - Methods that are never called should be discarded. Keeping dead code around is wasteful. Don't
+    be afraid to delete the function. Remember, your source code control system still remembers it.
+
+### General
+
+- *G1: Multiple Languages in One Source File*
+  - Limit the number of languages in a source file. Mixing too many makes code confusing. Aim for
+    one language per file and minimize any necessary extras.
+- *G2: Obvious Behavior Is Unimplemented*
+  - Following "The Principle of Least Surprise," Code should behave as expected. Follow intuitive
+    naming and logic, so users trust the function without digging into its details. Avoid surprising
+    or unintuitive behavior.
+- *G3: Incorrect Behavior at the Boundaries*
+  - Code must behave correctly in all cases. Don't rely on your intuition. Look for every boundary,
+    corner case, and write a test for it to ensure reliability.
+- *G4: Overridden Safeties*
+  - Overriding safety features like compiler warnings or failing tests is risky. Shortcuts may ease
+    development but lead to major issues later, just like ignoring safeguards did at Chernobyl.
+- *G5: Duplication*
+  - Code duplication signals a missed chance to abstract. Replace repeated code with methods or
+    classes to improve clarity, reuse, and reduce errors.
+  - Repeated switch or if/else chains and similar logic across modules are duplication. Use
+    polymorphism or design patterns like Template method, or Strategy pattern to eliminate them and
+    improve structure.
+- *G6: Code at Wrong Level of Abstraction*
+  - Keep high-level and low-level concepts separate. Place detailed logic in subclasses or specific
+    modules, and keep base classes or core files focused on general behavior only.
+  - Isolating abstractions is one of the hardest things that software developers do, and there is no
+    quick fix when you get it wrong.
+- *G7: Base Classes Depending on Their Derivatives*
+  - Base classes should not depend on their derivatives. Keeping them separate allows independent
+    deployment, reducing change impact and simplifying maintenance.
+- *G8: Too Much Information*
+  - Good modules have small, powerful interfaces with low coupling. Poor ones require many calls for
+    simple tasks, increasing complexity and coupling.
+  - Keep interfaces small and tight. Expose only what's necessary to reduce coupling. Hide data,
+    functions, and variables to keep classes focused and maintainable.
+- *G9: Dead Code*
+  - Dead code lingers unused, grows outdated, and adds confusion. Delete it to keep the system
+    clean, current, and maintainable.
+- *G10: Variable Separation*
+  - Define variables and functions close to where they're used. Keep scope small and vertical
+    distance short to improve readability and maintainability.
+- *G11: Inconsistency*
+  - Follow consistent naming and coding patterns. Similar things should be done in similar ways to
+    avoid surprises and make code easier to read and maintain.
+- *G12: Clutter*
+  - Remove unused code, empty constructors, and meaningless comments. Clutter reduces clarity. Keep
+    source files clean and well organized.
+- *G13: Artificial Coupling*
+  - Avoid artificial coupling by placing functions, constants, and enums in proper locations. Don't
+    group unrelated code for convenience—it harms design and clarity.
+- *G14: Feature Envy*
+  - A method should work with its own class's data, not rely heavily on another's. Using another
+    object's accessors too much shows misplaced responsibility.
+- *G15: Selector Arguments*
+  - Avoid selector arguments like Booleans or enums in functions. They hide intent and mix
+    behaviors. Use separate, focused functions instead.
+- *G16: Obscured Intent*
+  - Avoid dense code, magic numbers, and cryptic names. Clear, expressive code reveals intent and is
+    easier to understand and maintain.
+- *G17: Misplaced Responsibility*
+  - Place code where readers expect it. Names and location should match purpose. Avoid clever
+    placements that confuse intent, even if they're convenient.
+- *G18: Inappropriate Static*
+  - Prefer nonstatic methods unless polymorphism is clearly unnecessary. Static methods can't adapt
+    to different behaviors and may limit flexibility later.
+- *G19: Use Explanatory Variables*
+  - Use well-named intermediate variables to break up calculations. This boosts clarity and makes
+    complex code easier to read and understand.
+- *G20: Function Names Should Say What They Do*
+  - Function names should clearly express behavior. If you must read the code to understand what a
+    function does, rename it to reflect its action and effect.
+- *G21: Understand the Algorithm*
+  - Don't stop at code that just "works." Understand the algorithm fully. Refactor until the logic
+    is clear, expressive, and undeniably correct.
+  - It's normal to question an algorithm's suitability, but not knowing what your own code does is
+    simply careless.
+- *G22: Make Logical Dependencies Physical*
+  - Dependencies should be physical, not just assumed. A module must explicitly access what it
+    needs, not rely on hidden or logical assumptions.
+- *G23: Prefer Polymorphism to If/Else or Switch/Case*
+  - Switch statements are often overused. Prefer polymorphism and treat every switch as a potential
+    design flaw unless truly necessary.
+  - "ONE SWITCH" rule: There may be no more than one switch statement for a given type of selection.
+    The cases in that switch statement must create polymorphic objects that take the place of other
+    such switch statements in the rest of the system.
+- *G24: Follow Standard Conventions*
+  - Teams should follow shared coding standards reflected in their code. Consistency matters more
+    than personal style, promoting clarity and teamwork.
+- *G25: Replace Magic Numbers with Named Constants*
+  - Avoid magic numbers or unclear values in code. Use well-named constants to improve clarity,
+    reduce errors, and ensure consistency.
+- *G26: Be Precise*
+  - Be precise in coding decisions. Avoid lazy assumptions, handle exceptions, and write with
+    clarity to prevent ambiguity and bugs.
+- *G27: Structure over Convention*
+  - Prefer structural enforcement over naming conventions. Structures like abstract classes ensure
+    consistency, while conventions rely on discipline alone.
+- *G28: Encapsulate Conditionals*
+  - Make conditionals clear by extracting them into well-named functions. It improves readability
+    and reveals intent.
+- *G29: Avoid Negative Conditionals*
+  - Write conditionals as positives when possible. Positive expressions are clearer and easier to
+    understand than negatives.
+- *G30: Functions Should Do One Thing*
+  - Avoid functions that do many things. Break them into smaller functions, each focused on a single
+    task, to improve clarity and maintainability.
+- *G31: Hidden Temporal Couplings*
+  - Make temporal coupling clear. Design function arguments to reflect the required call order,
+    avoiding hidden dependencies.
+- *G32: Don't Be Arbitrary*
+  - Structure code with purpose and consistency. Clear, intentional design encourages others to
+    follow and maintain the same conventions.
+- *G33: Encapsulate Boundary Conditions*
+  - Handle boundary conditions in one place using well-named variables. This avoids scattered logic
+    like +1 or -1 and improves clarity and maintainability.
+- *G34: Functions Should Descend Only One Level of Abstraction*
+  - Keep all statements in a function at the same abstraction level, just below the function's name.
+    Mixing levels harms clarity and makes code harder to follow.
+- *G35: Keep Configurable Data at High Levels*
+  - Keep high-level constants visible and configurable at the top. Pass them as arguments to
+    lower-level functions instead of burying them deep in the code.
+- *G36: Avoid Transitive Navigation*
+  - Follow the Law of Demeter. Modules should only interact with immediate collaborators, not
+    navigate deep object chains like `a.getB().getC().doSomething()`.
+
+### Names
+
+- *N1: Choose Descriptive Names*
+  - Choose names carefully and review them often. Good names make code more readable and set clear
+    expectations for behavior and structure.
+- *N2: Choose Names at the Appropriate Level of Abstraction*
+  - Name things to match their level of abstraction. Avoid implementation details in names, and
+    refactor names as your code evolves to keep it clear and flexible.
+- *N3: Use Standard Nomenclature Where Possible*
+  - Use familiar naming conventions and project-specific language to improve code clarity. Following
+    known patterns helps readers understand code quickly.
+- *N4: Unambiguous Names*
+  - Pick names that clearly state what a function or variable does. Clarity is more important than
+    brevity, especially when the name removes ambiguity.
+- *N5: Use Long Names for Long Scopes*
+  - Use short names for short scopes and longer, more descriptive names for wider scopes. Name
+    length should match how far the variable or function travels.
+- *N6: Avoid Encodings*
+  - Avoid encoding names with type or scope info like *m_*. Modern tools make such prefixes
+    unnecessary and distracting.
+- *N7: Names Should Describe Side-Effects*
+  - Names should reveal all actions a function performs. Avoid hiding side effects with simple
+    names. Be explicit if a function does more than it appears.
+
+### Tests
+
+- *T1: Insufficient Tests*
+  - A test suite should cover everything that might break. If conditions or calculations are
+    untested, the suite is incomplete.
+- *T2: Use a Coverage Tool!*
+  - Coverage tools reveal untested code and help identify gaps. Visual cues in IDEs make it easy to
+    spot untested logic like unchecked if or catch blocks.
+- *T3: Don't Skip Trivial Tests*
+  - They are easy to write, and their documentary value is higher than the cost to produce them.
+- *T4: An Ignored Test Is a Question about an Ambiguity*
+  - Ignored tests highlight unclear requirements. Use them to document questions about behavior,
+    either with relevant attributes or comments, depending on what compiles.
+- *T5: Test Boundary Conditions*
+  - Take special care to test boundary conditions. We often get the middle of an algorithm right but
+    misjudge the boundaries.
+- *T6: Exhaustively Test Near Bugs*
+  - Bugs tend to congregate. When you find a bug in a function, it is wise to do an exhaustive test
+    of that function. You'll probably find that the bug was not alone.
+- *T7: Patterns of Failure Are Revealing*
+  - Well-ordered, complete tests can reveal failure patterns that help diagnose bugs quickly.
+    Patterns in test results often lead to key insights.
+- *T8: Test Coverage Patterns Can Be Revealing*
+  - Looking at the code that is or is not executed by the passing tests gives clues to why the
+    failing tests fail.
+- *T9: Tests Should Be Fast*
+  - A slow test is a test that won't get run. When things get tight, it's the slow tests that will
+    be dropped from the suite. So do what you must to keep your tests fast.
 
 ---
